@@ -9,6 +9,6 @@
             }
         })
         .then(response => response.json())
-        .then(response => {console.log(JSON.stringify(response)); document.getElementById("welcome").textContent='Welcome ' + response.data})
+        .then(response => {document.getElementById("welcome").textContent='Welcome ' + response.data})
     </script>
 </html>
