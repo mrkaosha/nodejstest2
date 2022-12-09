@@ -1,5 +1,12 @@
 <html>
     <h1 id="welcome"></h1>
+
+    <form onsubmit="return checkAnswer(event)">
+        What is the first color of the rainbow?
+        <p><input type="text" id="answer" name="answer" /></p>
+        <p><input type="submit" value="Check Answer" /></p>
+    </form>
+
     <script>
         fetch('/username', {
             method: 'GET',
@@ -10,5 +17,24 @@
         })
         .then(response => response.json())
         .then(response => {document.getElementById("welcome").textContent='Welcome ' + response.data})
+
+        function checkAnswer(e) {
+            e.preventDefault()
+            fetch('localhost', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    "id": "answer1",
+                    "data": document.getElementById("answer").value 
+                })
+            })
+            .then(response => response.json())
+            .then(response => {alert(response.dialog); window.location.href=response.id})
+            return(false)
+        }
+
     </script>
 </html>

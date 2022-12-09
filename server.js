@@ -12,16 +12,31 @@ const server = http.createServer((req, res) => {
       body += data
       console.log('Partial body: ' + body)
     })
+
+    // Writing the response now at the end of reading the request
     req.on('end', function() {
       console.log('Body: ' + body)
       
-      if(JSON.parse(body).id==="username") {
-        res.writeHead(200, {'Content-Type': 'application/json'})
-        userName = JSON.parse(body).data
+      var bodyJSON = JSON.parse(body)
+      var bodyJSONid = bodyJSON.id
+      var bodyJSONdata = bodyJSON.data
+      res.writeHead(200, {'Content-Type': 'application/json'})
+      var responseJSON = { id: "" }
+
+      if(bodyJSONid==="username") {
+        userName = bodyJSONdata
         res.end(JSON.stringify({ id: "problem1.html" }))
       }
       
       /** Start coding here */
+
+      if(bodyJSONid==="answer1") {
+        if(bodyJSONdata==="red") {
+          res.end(JSON.stringify({ dialog: "correct!", id: "problem2.html" }))
+        } else {
+          res.end(JSON.stringify({ dialog: "incorrect :(", id: "problem1.html" }))
+        }
+      }
 
       /** Do not go beyond this section for now */
 
