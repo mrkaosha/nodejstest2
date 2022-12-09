@@ -2,6 +2,7 @@ const http = require('http')
 const fs = require('fs')
 
 userName='South Hills Student'
+allResponsesArray = []
 
 const server = http.createServer((req, res) => {
   res.writeHead(200, { 'content-type': 'text/html' })
@@ -10,12 +11,13 @@ const server = http.createServer((req, res) => {
     var body = ''
     req.on('data', function(data) {
       body += data
-      console.log('Partial body: ' + body)
+      //console.log('Partial body: ' + body)
     })
 
     // Writing the response now at the end of reading the request
     req.on('end', function() {
       console.log('Body: ' + body)
+      allResponsesArray.push(body)
       
       var bodyJSON = JSON.parse(body)
       var bodyJSONid = bodyJSON.id
@@ -40,7 +42,10 @@ const server = http.createServer((req, res) => {
 
       /** Do not go beyond this section for now */
 
+      console.log("All Responses: " + allResponsesArray)
     })
+    // end of writing response
+
   } else if (req.method == 'GET' && req.url == '/username') {
     console.log('GET Username')
     res.writeHead(200, {'Content-Type': 'application/json'})
