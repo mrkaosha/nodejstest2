@@ -27,21 +27,23 @@ const server = http.createServer((req, res) => {
 
       if(bodyJSONid==="username") {
         userName = bodyJSONdata
-        res.end(JSON.stringify({ id: "problem1.html" }))
+        responseJSON.id = "problem1.html"
       }
       
       /** Start coding here */
 
       if(bodyJSONid==="answer1") {
         if(bodyJSONdata==="red") {
-          res.end(JSON.stringify({ dialog: "correct!", id: "problem2.html" }))
-        } else {
-          res.end(JSON.stringify({ dialog: "incorrect :(", id: "problem1.html" }))
+          responseJSON.dialog = "correct!"
+          responseJSON.id = "problem2.html"
+        } else {          
+          responseJSON.dialog = "incorrect!"
+          responseJSON.id = "problem1.html"
         }
       }
 
       /** Do not go beyond this section for now */
-
+      res.end(JSON.stringify(responseJSON))
       console.log("All Responses: " + allResponsesArray)
     })
     // end of writing response
