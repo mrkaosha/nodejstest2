@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
       var bodyJSONid = bodyJSON.id
       var bodyJSONdata = bodyJSON.data
       res.writeHead(200, {'Content-Type': 'application/json'})
-      var responseJSON = { id: "" }
+      var responseJSON = { dialog:"", id: "" }
 
       if(bodyJSONid==="username") {
         userName = bodyJSONdata
